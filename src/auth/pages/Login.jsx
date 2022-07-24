@@ -1,10 +1,15 @@
 import { Google } from '@mui/icons-material'
 import { Grid, Typography,TextField, Button,Link} from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink , useNavigate} from 'react-router-dom'
 import React from 'react'
 import { AuthLayout } from '../layout/AuthLayout';
 
 export const Login = () => {
+  const navigate = useNavigate()
+  const onLogin=() => {
+    console.log('entradando')
+    navigate('/')
+  }
   return (
       <AuthLayout title="Login">
       <form>
@@ -29,7 +34,7 @@ export const Login = () => {
           </Grid>
           <Grid container spacing={2} sx={{mb:2, mt:1}} >
             <Grid item xs={12} sm={6}>
-              <Button 
+              <Button onClick={onLogin}
                 variant="contained"
                 fullWidth
                 >Login</Button>
