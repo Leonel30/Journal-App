@@ -1,7 +1,29 @@
-import { useState } from "react";
+/* eslint-disable no-use-before-define */
 
-export const useForm=( initialForm = {}) => {
+import { useState, useEffect ,useMemo } from "react";
+
+export const useForm=( initialForm = {} , formValidations = {}) => {
+
     const [formState, setFormState] = useState(initialForm);
+    // 1 declaro estado donde voy a guardar las respuestas de validacion//
+    const [formValidation, setFormValidation] = useState({})
+
+    //useEfect para disparar la funcion createValidations //
+
+    useEffect(() => {
+        createValidations()
+        
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formState])
+    
+    const isFormValid = useMemo(()=> {
+
+        for ( const formValue of Object.keys( formValidation )){
+            if( formValidation[formValue] !== null) return false;
+        }
+        return true
+
+    },[formValidation])
 
     const onInputChange = ({ target }) => {
         const {name, value} = target
@@ -11,10 +33,28 @@ export const useForm=( initialForm = {}) => {
     const onResetForm = ()=> {
         setFormState(initialForm)
     }
+
+    // 3- aqui cheque el objeto de validaciones //
+    const createValidations = ()=> {
+
+        const formCheckedValues = {}
+
+        for( const formField of Object.keys(formValidations) ) {
+            const [ fn, errorMessage] = formValidations[formField]
+
+            formCheckedValues[`${ formField }Valid`] = fn( formState[formField])? null : errorMessage;
+        }
+        setFormValidation( formCheckedValues)
+
+      
+    }
     return {
         ...formState,
         formState,
         onInputChange,
-        onResetForm
+        onResetForm,
+
+        ...formValidation,
+        isFormValid
     }
 } 

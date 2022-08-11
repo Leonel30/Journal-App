@@ -2,10 +2,10 @@ import React, { useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { AuthLayout } from '../layout/AuthLayout';
 import { Link as RouterLink } from 'react-router-dom'
-import { Grid, Typography,TextField, Button,Link} from '@mui/material';
+import { Grid, Typography,TextField, Button,Link, Alert} from '@mui/material';
 import { Google } from '@mui/icons-material'
 import { useForm } from '../../hooks/useForm'
-import { checkingAuthentication, startGoogleSingInt } from '../../store/authSlices/authThunks';
+import { startGoogleSingInt, startLoginWithEmailPassword } from '../../store/authSlices/authThunks';
 
 export const Login = () => {
   /* const navigate = useNavigate() */
@@ -18,20 +18,19 @@ export const Login = () => {
   const dispatch = useDispatch();
 
   //tomando una propiedad del estado inicial del authSlice//
-  const { status } = useSelector(state => state.auth)
+  const { status, errorMessage } = useSelector(state => state.auth)
 
 
   const {onInputChange, formState} = useForm({
-    email:'leo@google.com',
-    password:'1234',
-    name:'leo'
+    email:'',
+    password:'',
   })
   const {email,password} = formState
   const isAuthenticating = useMemo(() => status === "checking", [status])
 
   const onSubmit=(e)=> {
     e.preventDefault();
-    dispatch( checkingAuthentication() )
+    dispatch( startLoginWithEmailPassword({email, password}) )
   }
 
   const onGoogleSignIn = () => {
@@ -56,7 +55,7 @@ export const Login = () => {
             >
             </TextField>
           </Grid>
-          <Grid item xs={12} sx={{mt:2}} >
+          <Grid item xs={12} sx={{ mt:2, mb:2 }} >
             <TextField
               label="Contraseña"
               type="password"
@@ -67,6 +66,9 @@ export const Login = () => {
               onChange= {onInputChange}
             >
             </TextField>
+          </Grid>
+          <Grid item xs={12} sm={12} display={!!errorMessage? '': 'none'}>
+              <Alert severity='error'>{errorMessage}</Alert>
           </Grid>
           <Grid container spacing={2} sx={{mb:2, mt:1}} >
             <Grid item xs={12} sm={6}>
