@@ -5,6 +5,7 @@ import React from 'react'
 export const NothingSelectView = () => {
   return (
     <Grid
+    className ="animate__animated animate__zoomInLeft"
     container
     spacing={ 0 }
     direction="column"

@@ -5,7 +5,8 @@ import { ImageGalery } from '../components/ImageGalery'
 
 export const NoteView = () => {
   return (
-   <Grid container direction='row' justifyContent='space-between' sx={{mb:1}}>
+   <Grid container direction='row' justifyContent='space-between' sx={{mb:1}}
+   className ="animate__animated animate__zoomInLeft">
     <Grid item>
         <Typography fontSize={ 39 } fontWeight= 'light' >
             30 Julio 2022

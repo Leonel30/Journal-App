@@ -5,10 +5,12 @@ import { NothingSelectView } from '../view/NothingSelectView'
 import { NoteView } from '../view/NoteView'
 import { AddOutlined } from '@mui/icons-material'
 
-const view = true
+const view = false
 export const Journal = () => {
   return (
-    <JournalLayout>
+    <JournalLayout
+    className ="animate__animated animate__zoomInLeft"
+    >
     {/*     <Typography> Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod ex incidunt, eum corporis ut placeat. Ipsa ab rerum vel! Assumenda consequuntur perspiciatis enim quasi dignissimos iste magni id et ex.</Typography> */}
     {/* <NothingSelectView/> */}
     {
